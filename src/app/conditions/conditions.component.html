@@ -1,0 +1,79 @@
+<div class="container">
+
+  <div class="box">
+    <div class="col-sm-7 left-side">
+      <img src="../../assets/images/blower.jpeg" alt="">
+    </div>
+    <div class="col-sm-5">
+      <div class="row">
+        <input name="blower" value="blower" type="checkbox" [(ngModel)]="blower"/>
+        Blower
+        <br>
+      </div>
+      <div class="row">
+        <h2>Included</h2>
+      </div>
+      <div class="row">
+        <h5>{{blower.price}}&euro;</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="col-sm-5 left-side">
+      <img src="../../assets/images/basket.jpg" alt="Basket">
+    </div>
+    <div class="col-sm-7">
+      <div class="row tip">
+        <h5>
+          <input type="checkbox" name="basket" value="basket" checked [(ngModel)]="basket"/>
+          Storage basket
+        </h5>
+        <div class="help-tip">
+          <p>{{basket.tooltip}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <h5>{{basket.description}}</h5>
+      </div>
+      <div class="row">
+        <h5>{{basket.price}}&euro;</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="col-sm-7 left-side">
+      <img src="../../assets/images/delivery.png" alt="">
+    </div>
+    <div class="col-sm-5">
+      <div class="row tip">
+        <h4>
+          <input type="checkbox" name="delivery" value="delivery" checked />
+          Delivery
+        </h4>
+        <div class="help-tip">
+          <p>{{delivery.tooltip}}</p>
+        </div>
+      </div>
+      <div class="row" style="text-align: initial;">
+        <h5> {{delivery.description}} </h5>
+      </div>
+      <div class="row">
+        <h5>{{delivery.price}}&euro;</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="col-sm-12" style="text-align: center;">
+      <h1><strong>{{total}} &euro;</strong></h1>
+    </div>
+    <div class="col-sm-12" style="text-align: center; padding-top: 10px;">
+      <button class="btn btn-outline-success btn-sm" type="submit" style="contain: content;"
+      (click)="quotationRequest()">
+        <h4>REQUEST QUOTATION</h4>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+{
+  "/assets/components/boogdesigner/api/*": {
+    "target": "http://startboog.nl/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

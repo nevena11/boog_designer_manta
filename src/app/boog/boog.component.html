@@ -1,0 +1,221 @@
+<div class="col-md-5">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div>
+                <div *ngFor="let img of images; let item = index" class="option"
+                    [ngClass]="{'--is-active': selectedItem === item}" (click)="selectedItem = item" data-option=item
+                    (click)="selectOption(item)">
+                    <img src="{{img}}" alt="" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slidecontainer">
+        <h5><b>Adjust width:</b></h5>
+        <div class="sliderDisplay">
+            <h4 style="color:black;">3m.&nbsp;&nbsp;</h4>
+            <input type="range" min="3" max="12" value="3" (change)="sliderChangedValue($event)">
+            <h4 style="color:black">&nbsp;&nbsp;12m.</h4>
+        </div>
+    </div>
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne">
+                        Change background color
+                        <div style="display: contents;" *ngIf="archSelectedColors && archSelectedColors[selectedItem]">
+                            <div class="tray__swatch__selected__text" style="margin-left: 20px;"
+                                [ngStyle]="{'background-color': buildSelectedColor()}">
+                                <h5 style="margin-left: 20px;"> #{{archSelectedColors[selectedItem]}}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <div *ngIf="selectedItem == 0" class="alert alert-warning">
+                        <strong>3D view is active!</strong> Changing color in this view will apply it to all segments.
+                    </div>
+                    <div id="js-tray" class="tray">
+                        <div id="js-tray-slide" class="tray__slide"></div>
+                    </div>
+                    <div>
+                        <h5>
+                            <button class="btn btn-link" name="addOption" value="addOption"
+                                (click)="addOrRemoveOption($event)">
+                                Add checker texture
+                            </button>
+                        </h5>
+                        <h5>
+                            <input type="checkbox" name="customColor" value="customColor" ngModel
+                                (change)="customColor($event)">
+                            Add custom color for &euro; 200,-
+                        </h5>
+
+                        <div id="accordion" role="tablist" aria-multiselectable="true">
+                            <div>
+                                <h5>
+                                    <input class="moreColors" type="button" value="More colors" [(colorPicker)]="color"
+                                        [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
+                                        (colorPickerSelect)="cmykValue($event)" [ngClass]="{disabled: !isChecked}" />
+                                    <!-- [ngClass]="{disabled: !isChecked || (!selectedItem && !allColors)}" /> -->
+
+                                </h5>
+                                <div [ngClass]="{disabled: !isChecked}" id="js-tray" class="tray">
+                                    <div id="js-tray-slide-custom" class="tray__slide"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        Add logo or velcro
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input (change)="none('all')" class="col-sm-2" type="radio" name="level0"
+                                class="input-hidden col-sm-2" value="none" (change)="addLogoOrVelcroRadio(0)" checked>
+                            <label class="col-sm-4">None</label>
+                            <div class="col-sm-6"></div>
+                        </div>
+                        <div class="col-sm-8"></div>
+                        <div class="col-sm-12">
+                            <input type="radio" name="level0" class="input-hidden col-sm-2" value="img"
+                                (change)="addLogoOrVelcroRadio(1, $event)">
+                            <img class="col-sm-4" src="../../assets/images/imageUpload.jpg" />
+                            <label class="col-sm-6">Upload an image in png only</label>
+                            <input #fileInput [ngClass]="{disabled: !selectedItem, disabledFileUpload: !selectedItem  }"
+                                [hidden]="!ifSelected" type='file' (change)="onSelectFile($event)" accept="image/png">
+                        </div>
+                        <div class="col-sm-12">
+                            <input (change)="addLogoOrVelcroRadio('w')" class="col-sm-2" type="radio" name="level0"
+                                value="velcro" id="VA" />
+                            <img class="col-sm-4" src="../../assets/images/square.png" />
+                            <label class="col-sm-6" for="VA">Velcro area</label>
+                            <div class="sub1 col-sm-12">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-4"></div>
+                                    <input type="radio" name="level1" value="D0" id="D0"
+                                        (change)="addLogoOrVelcroRadio('w')" [checked]="velcro == true" />
+                                    <label for="D0">White velcro</label>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="col-sm-4"></div>
+                                    <input type="radio" name="level1" value="D1" id="D1"
+                                        (change)="addLogoOrVelcroRadio('b')" />
+                                    <label for="D1">Black velcro</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingThree">
+                <h4 class="panel-title">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"
+                        aria-expanded="true" aria-controls="collapseThree">
+                        Add text
+                        <div style="display: contents;" *ngIf="archSelectedTextColor">
+                            <div class="tray__swatch__selected__text" style="margin-left: 20px;"
+                                [ngStyle]="{'background-color': buildTextColor()}">
+                                <h5 style="margin-left: 20px;"> #{{archSelectedTextColor}}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body panel3">
+                    <label class="col-sm-4">
+                        <input type="radio" name="text" class="input-hidden" value="none" (change)="switchText($event)"
+                            checked>
+                        <p>NONE</p>
+                    </label>
+                    <label class="col-sm-4">
+                        <input type="radio" name="text" ngModel class="input-hidden" value="start"
+                            (change)="switchText($event)">
+                        <p>START</p>
+                    </label>
+                    <label class="col-sm-4">
+                        <input type="radio" name="text" ngModel class="input-hidden" value="finish"
+                            (change)="switchText($event)">
+                        <p>FINISH</p>
+                    </label>
+                    <label class="col-sm-12">
+                        <input type="radio" name="text" ngModel class="input-hidden" value="startFinish"
+                            (change)="switchText($event)">
+                        <p>START(front) / FINISH(back)</p>
+                    </label>
+                </div>
+                <div class="textColors">
+                    <div id="js-tray-text" class="tray">
+                        <div id="js-tray-slide-text" class="tray__slide"></div>
+                    </div>
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <h5>
+                            <input class="moreColors" type="button" value="More colors" [(colorPicker)]="color"
+                                [cpOKButton]="true" [cpOKButtonClass]="'btn btn-primary btn-xs'"
+                                (colorPickerSelect)="cmykValue($event)" />
+                        </h5>
+                        <div id="js-tray" class="tray">
+                            <div id="js-tray-slide-custom-text" class="tray__slide"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-7">
+    <div id="body">
+
+        <div class="loading" id="js-loader">
+            <div class="loader"></div>
+        </div>
+        <span class="drag-notice" id="js-drag-notice">Drag to rotate 360&#176;</span>
+        <div class="options"></div>
+        <canvas #c id="c"></canvas>
+
+        <div class="controls">
+            <div class="info">
+                <div class="info__message">
+                    <p class="info_msg2"><strong>&nbsp;Grab&nbsp;</strong> to rotate boog. <strong>&nbsp;Scroll&nbsp;</strong> to zoom.</p>
+                    <p class="info_msg1">
+                        <span>Width: {{boogWidth}} meter;</span>
+                        <span>Height: {{boogHeight}} meter; </span>
+                        <span>Tube diameter: {{boogDiameter}} meter</span>
+                        <span>Inner width: {{boogWidth - 2 * boogDiameter}} meter; </span>
+                        <span>Inner height: {{boogHeight - boogDiameter}} meter; </span>
+                    </p>
+                    <!-- <button class="btn btn-outline-success btn-sm" style="float: right; padding: 0;"
+                        (click)="downloadObj()">
+                        <h5>Download your model</h5>
+                    </button> -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
