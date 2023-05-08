@@ -42,10 +42,10 @@
     "@angular/compiler-cli": "^8.2.14",
     "@angular/language-service": "^8.2.14",
     "jasmine-core": "^3.5.0",
-    "karma": "^4.4.1",
+    "karma": "^6.4.2",
     "karma-chrome-launcher": "^3.1.0",
     "karma-jasmine": "^3.1.1",
-    "protractor": "^5.4.3",
+    "protractor": "^5.4.4",
     "tslint": "^6.0.0",
     "typescript": "^3.5.3"
   }
